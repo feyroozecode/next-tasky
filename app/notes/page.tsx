@@ -1,8 +1,9 @@
+import Link from 'next/link';
 
 // fetch all notes
 async function getNotes() {
     const baseUrl = 'http://127.0.0.1:8090/api/collections/notes/records?page=1&perPage=30';
-    const res = await fetch(baseUrl)
+    const res = await fetch(baseUrl, {cachr: 'no-store'})
     const data = await res.json()
 
     data?.items.map((item) => {
@@ -21,13 +22,10 @@ export default async function NotesPage(){
             <h1>Notes</h1>
 
             <div>
-                {
-                    notes?.map(
-                    (note) => {
-                        <Note key={note.id} note={note} />;
+                {notes?.map((note) => {
+                        return <Note key={note.id} note={note} />;
                     }
-                    )
-                }
+                )}
             </div>
             
         </div>
@@ -45,5 +43,5 @@ function Note({note}: any){
                 <p>{created}</p>
             </div>
         </Link>
-    )
+    );
 }
